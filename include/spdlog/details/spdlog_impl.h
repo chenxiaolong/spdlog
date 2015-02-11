@@ -30,6 +30,7 @@
 #include "registry.h"
 #include "../sinks/androidlog_sink.h"
 #include "../sinks/file_sinks.h"
+#include "../sinks/klog_sink.h"
 #include "../sinks/stdout_sinks.h"
 #include "../sinks/syslog_sink.h"
 
@@ -99,6 +100,14 @@ inline std::shared_ptr<spdlog::logger> spdlog::syslog_logger(const std::string& 
 inline std::shared_ptr<spdlog::logger> spdlog::androidlog_logger(const std::string& logger_name, const std::string& tag)
 {
     return create<spdlog::sinks::androidlog_sink>(logger_name, tag);
+}
+#endif
+
+#ifdef __linux__
+// Create kmsg logger
+inline std::shared_ptr<spdlog::logger> spdlog::klog_logger(const std::string& logger_name, const std::string& tag)
+{
+    return create<spdlog::sinks::klog_sink>(logger_name, tag);
 }
 #endif
 

@@ -115,6 +115,14 @@ std::shared_ptr<logger> androidlog_logger(const std::string& logger_name, const 
 #endif
 
 
+//
+// Create a kmsg logger
+//
+#ifdef __linux__
+std::shared_ptr<logger> klog_logger(const std::string& logger_name, const std::string& tag = "");
+#endif
+
+
 // Create a logger with multiple sinks
 std::shared_ptr<logger> create(const std::string& logger_name, sinks_init_list sinks);
 template<class It>
