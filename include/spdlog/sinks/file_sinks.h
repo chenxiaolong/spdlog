@@ -127,12 +127,12 @@ private:
             {
                 if (std::remove(target.c_str()) != 0)
                 {
-                    throw spdlog_ex("rotating_file_sink: failed removing " + target);
+                    SPD_THROW(spdlog_ex("rotating_file_sink: failed removing " + target));
                 }
             }
             if (details::file_helper::file_exists(src) && std::rename(src.c_str(), target.c_str()))
             {
-                throw spdlog_ex("rotating_file_sink: failed renaming " + src + " to " + target);
+                SPD_THROW(spdlog_ex("rotating_file_sink: failed renaming " + src + " to " + target));
             }
         }
         _file_helper.reopen(true);

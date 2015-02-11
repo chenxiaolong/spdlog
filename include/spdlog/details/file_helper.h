@@ -76,13 +76,13 @@ public:
             std::this_thread::sleep_for(std::chrono::milliseconds(open_interval));
         }
 
-        throw spdlog_ex("Failed opening file " + fname + " for writing");
+        SPD_THROW(spdlog_ex("Failed opening file " + fname + " for writing"));
     }
 
     void reopen(bool truncate)
     {
         if(_filename.empty())
-            throw spdlog_ex("Failed re opening file - was not opened before");
+            SPD_THROW(spdlog_ex("Failed re opening file - was not opened before"));
         open(_filename, truncate);
 
     }
@@ -102,7 +102,7 @@ public:
         size_t size = msg.formatted.size();
         auto data = msg.formatted.data();
         if(std::fwrite(data, 1, size, _fd) != size)
-            throw spdlog_ex("Failed writing to file " + _filename);
+            SPD_THROW(spdlog_ex("Failed writing to file " + _filename));
 
         if(_force_flush)
             std::fflush(_fd);

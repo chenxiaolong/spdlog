@@ -36,6 +36,35 @@
 #define SPDLOG_NOEXCEPT throw()
 #endif
 
+
+#if __GNUC__ && !__EXCEPTIONS
+# define SPD_EXCEPTIONS 0
+#endif
+#if _MSC_VER && !_HAS_EXCEPTIONS
+# define SPD_EXCEPTIONS 0
+#endif
+#ifndef SPD_EXCEPTIONS
+# define SPD_EXCEPTIONS 1
+#endif
+
+#if SPD_EXCEPTIONS
+# define SPD_TRY try
+# define SPD_CATCH(x) catch (x)
+#else
+# define SPD_TRY if (true)
+# define SPD_CATCH(x) if (false)
+#endif
+
+#ifndef SPD_THROW
+# if SPD_EXCEPTIONS
+#  define SPD_THROW(x) throw x
+#  define SPD_RETURN_AFTER_THROW(x)
+# else
+#  define SPD_THROW(x) assert(false)
+#  define SPD_RETURN_AFTER_THROW(x) return x
+# endif
+#endif
+
 // under linux, you can use the much faster CLOCK_REALTIME_COARSE clock.
 // this clock is less accurate - can be off by few millis - depending on the kernel HZ
 // uncomment to use it instead of the regular (and slower) clock

@@ -85,13 +85,13 @@ public:
     {
         if (!_enabled)
             return;
-        try
+        SPD_TRY
         {
             _log_msg.raw.write(fmt, args...);
         }
-        catch (const fmt::FormatError& e)
+        SPD_CATCH (const fmt::FormatError& e)
         {
-            throw spdlog_ex(fmt::format("formatting error while processing format string '{}': {}", fmt, e.what()));
+            SPD_THROW(spdlog_ex(fmt::format("formatting error while processing format string '{}': {}", fmt, e.what())));
         }
     }
 

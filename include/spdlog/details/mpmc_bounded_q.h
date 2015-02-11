@@ -81,7 +81,7 @@ public:
     {
         //queue size must be power of two
         if(!((buffer_size >= 2) && ((buffer_size & (buffer_size - 1)) == 0)))
-            throw spdlog_ex("async logger queue size must be power of two");
+            SPD_THROW(spdlog_ex("async logger queue size must be power of two"));
 
         for (size_t i = 0; i != buffer_size; i += 1)
             buffer_[i].sequence_.store(i, std::memory_order_relaxed);
