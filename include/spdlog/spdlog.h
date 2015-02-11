@@ -123,6 +123,13 @@ std::shared_ptr<logger> klog_logger(const std::string& logger_name, const std::s
 #endif
 
 
+//
+// Create stdio-based stdout/stderr loggers
+//
+std::shared_ptr<logger> c_stdout_logger(const std::string& logger_name, const std::string& tag = "");
+std::shared_ptr<logger> c_stderr_logger(const std::string& logger_name, const std::string& tag = "");
+
+
 // Create a logger with multiple sinks
 std::shared_ptr<logger> create(const std::string& logger_name, sinks_init_list sinks);
 template<class It>

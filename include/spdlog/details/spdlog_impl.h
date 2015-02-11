@@ -31,6 +31,7 @@
 #include "../sinks/androidlog_sink.h"
 #include "../sinks/file_sinks.h"
 #include "../sinks/klog_sink.h"
+#include "../sinks/stdio_sinks.h"
 #include "../sinks/stdout_sinks.h"
 #include "../sinks/syslog_sink.h"
 
@@ -110,6 +111,16 @@ inline std::shared_ptr<spdlog::logger> spdlog::klog_logger(const std::string& lo
     return create<spdlog::sinks::klog_sink>(logger_name, tag);
 }
 #endif
+
+inline std::shared_ptr<spdlog::logger> spdlog::c_stdout_logger(const std::string& logger_name, const std::string& tag)
+{
+    return create<spdlog::sinks::c_stdout_sink>(logger_name, tag);
+}
+
+inline std::shared_ptr<spdlog::logger> spdlog::c_stderr_logger(const std::string& logger_name, const std::string& tag)
+{
+    return create<spdlog::sinks::c_stderr_sink>(logger_name, tag);
+}
 
 
 //Create logger with multiple sinks
