@@ -28,6 +28,7 @@
 // Global registry functions
 //
 #include "registry.h"
+#include "../sinks/androidlog_sink.h"
 #include "../sinks/file_sinks.h"
 #include "../sinks/stdout_sinks.h"
 #include "../sinks/syslog_sink.h"
@@ -90,6 +91,14 @@ inline std::shared_ptr<spdlog::logger> spdlog::stderr_logger_st(const std::strin
 inline std::shared_ptr<spdlog::logger> spdlog::syslog_logger(const std::string& logger_name, const std::string& syslog_ident, int syslog_option)
 {
     return create<spdlog::sinks::syslog_sink>(logger_name, syslog_ident, syslog_option);
+}
+#endif
+
+#if defined(__ANDROID__) && defined(USE_ANDROID_LOG)
+// Create Android logger
+inline std::shared_ptr<spdlog::logger> spdlog::androidlog_logger(const std::string& logger_name, const std::string& tag)
+{
+    return create<spdlog::sinks::androidlog_sink>(logger_name, tag);
 }
 #endif
 

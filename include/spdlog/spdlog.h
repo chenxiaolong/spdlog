@@ -107,6 +107,14 @@ std::shared_ptr<logger> syslog_logger(const std::string& logger_name, const std:
 #endif
 
 
+//
+// Create an Android logger
+//
+#if defined(__ANDROID__) && defined(USE_ANDROID_LOG)
+std::shared_ptr<logger> androidlog_logger(const std::string& logger_name, const std::string& tag = "");
+#endif
+
+
 // Create a logger with multiple sinks
 std::shared_ptr<logger> create(const std::string& logger_name, sinks_init_list sinks);
 template<class It>
