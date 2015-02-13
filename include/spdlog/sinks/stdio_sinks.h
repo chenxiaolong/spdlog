@@ -24,7 +24,6 @@
 
 #pragma once
 
-#include <array>
 #include <string>
 
 #include "./sink.h"
@@ -43,16 +42,6 @@ public:
     stdio_sink(FILE *stream, const std::string &tag = ""):
         _stream(stream), _tag(tag)
     {
-        _priorities[static_cast<int>(level::trace)]    = "[t]";
-        _priorities[static_cast<int>(level::debug)]    = "[d]";
-        _priorities[static_cast<int>(level::info)]     = "[i]";
-        _priorities[static_cast<int>(level::notice)]   = "[n]";
-        _priorities[static_cast<int>(level::warn)]     = "[w]";
-        _priorities[static_cast<int>(level::err)]      = "[e]";
-        _priorities[static_cast<int>(level::critical)] = "[c]";
-        _priorities[static_cast<int>(level::alert)]    = "[a]";
-        _priorities[static_cast<int>(level::emerg)]    = "[!]";
-        _priorities[static_cast<int>(level::off)]      = "[ ]";
     }
 
     stdio_sink(const stdio_sink&) = delete;
@@ -60,21 +49,14 @@ public:
 
     void log(const details::log_msg &msg) override
     {
-        fprintf(_stream, "%s %s\n", prio_from_level(msg.level).c_str(),
-                msg.formatted.str().c_str());
+        fprintf(_stream, "%s", msg.formatted.str().c_str());
     }
 
 
 
 private:
-    std::array<std::string, 10> _priorities;
     std::FILE *_stream;
     const std::string _tag;
-
-    std::string prio_from_level(const details::log_msg &msg) const
-    {
-        return _priorities[static_cast<int>(msg.level)];
-    }
 };
 
 class c_stdout_sink : public stdio_sink
